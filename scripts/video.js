@@ -21,6 +21,7 @@ const loadVideos = () => {
 
 
 */
+// create cardDemo object
 const cardDemo = {
     category_id: "1001",
     video_id: "aaaa",
@@ -52,16 +53,20 @@ const DisplayVideos = (videos) => {
         const card = document.createElement("div");
         card.classList = "card card-compact";
         card.innerHTML = `
-        <figure>
-            <img
+        <figure class="h-[200px]">
+            <img class="w-full h-full object-cover"
             src=${item.thumbnail}
             alt="Shoes" />
         </figure>
-        <div class="card-body">
-            <h2 class="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-            <button class="btn btn-primary">Buy Now</button>
+        <div class="px-0 py-2 flex gap-2">
+            <div class="flex items-center gap-2">
+                <img class="w-10 h-10 rounded-full"
+                src=${item.authors[0].profile_picture}
+                alt="Olivia Mitchell" />
+                <div>
+                    <h3 class="font-semibold">${item.title}</h3>
+                    <p class="text-sm text-gray-500">${item.authors[0].profile_name}</p>
+                </div>
             </div>
         </div>`;
         // add button to categoryContainer
