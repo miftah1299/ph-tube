@@ -67,6 +67,21 @@ const DisplayVideos = (videos) => {
     const videoContainer = document.getElementById("videos");
     videoContainer.innerHTML = "";
 
+    if (videos.length === 0) {
+        // remove grid class
+        videoContainer.classList.remove("grid");
+        // add no videos found message
+        videoContainer.innerHTML = `
+        <div class="min-h-80 flex flex-col justify-center items-center gap-5">
+        <img src="images/icon.png" alt="no videos found" />
+        <h2 class="text-2xl font-semibold text-center">No videos found</h2>
+        </div>`;
+        return;
+    } else {
+        // add grid class
+        videoContainer.classList.add("grid");
+    }
+
     // add data to the page
     videos.forEach((item) => {
         console.log(item);
