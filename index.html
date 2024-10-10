@@ -49,6 +49,22 @@
         </section>
     </main>
 
+
+    <!-- Open the modal using ID.showModal() method -->
+    <button id="showModal-btn" class="hidden btn" onclick="customModal.showModal()">open modal</button>
+    <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <div id="modal-content">
+            </div>
+            <div class="modal-action justify-center">
+                <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn btn-wide btn-outline">Close</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+
     <!-- javaScript -->
     <script src="scripts/app.js"></script>
 </body>
