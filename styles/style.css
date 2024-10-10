@@ -1,0 +1,10 @@
+/*
+
+
+*/
+
+/* active class for buttons */
+.active {
+    background-color: #ff0000;
+    color: #fff;
+}

@@ -8,13 +8,22 @@ function getTimeString(time) {
     return `${hour}hrs ${minute}min ago`;
 }
 
+// remove active class
+const removeActiveClass = () => {
+    const buttons = document.getElementsByClassName("btn-category");
+    // console.log(buttons);
+    for (let btn of buttons) {
+        btn.classList.remove("active");
+    }
+};
+
 // fetch, load and show categories on the page
 
 // create loadCategories function
 const loadCategories = () => {
     fetch("https://openapi.programming-hero.com/api/phero-tube/categories")
         .then((response) => response.json())
-        .then((data) => DisplayCategories(data.categories))
+        .then((data) => displayCategories(data.categories))
         .catch((error) => console.log(error));
 };
 
@@ -22,7 +31,7 @@ const loadCategories = () => {
 const loadVideos = () => {
     fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
         .then((response) => response.json())
-        .then((data) => DisplayVideos(data.videos))
+        .then((data) => displayVideos(data.videos))
         .catch((error) => console.log(error));
 };
 
@@ -32,7 +41,15 @@ const loadCategoryVideos = (id) => {
     // fetch category videos
     fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
         .then((response) => response.json())
-        .then((data) => DisplayVideos(data.category))
+        .then((data) => {
+            removeActiveClass();
+
+            const activeBtn = document.getElementById(`btn-${id}`);
+            // if (activeBtn) console.log("btn activated");
+            activeBtn.classList.add("active");
+            // console.log(activeBtn);
+            displayVideos(data.category);
+        })
         .catch((error) => console.log(error));
 };
 
@@ -62,8 +79,8 @@ const loadCategoryVideos = (id) => {
 //         "Dive into the rhythm of 'Shape of You,' a captivating track that blends pop sensibilities with vibrant beats. Created by Olivia Mitchell, this song has already gained 100K views since its release. With its infectious melody and heartfelt lyrics, 'Shape of You' is perfect for fans looking for an uplifting musical experience. Let the music take over as Olivia's vocal prowess and unique style create a memorable listening journey.",
 // };
 
-// create DisplayVideos function
-const DisplayVideos = (videos) => {
+// create displayVideos function
+const displayVideos = (videos) => {
     const videoContainer = document.getElementById("videos");
     videoContainer.innerHTML = "";
 
@@ -72,9 +89,9 @@ const DisplayVideos = (videos) => {
         videoContainer.classList.remove("grid");
         // add no videos found message
         videoContainer.innerHTML = `
-        <div class="min-h-80 flex flex-col justify-center items-center gap-5">
-        <img src="images/icon.png" alt="no videos found" />
-        <h2 class="text-2xl font-semibold text-center">No videos found</h2>
+        <div class="min-h-80 w-1/2 mx-auto flex flex-col justify-center items-center gap-5">
+        <img src="images/icon.png" />
+        <h2 class="text-4xl font-semibold text-center">Oops!! Sorry, There is no content here</h2>
         </div>`;
         return;
     } else {
@@ -131,8 +148,8 @@ const DisplayVideos = (videos) => {
 //     "category": "Music"
 // }
 
-// create DisplayCategories function
-const DisplayCategories = (categories) => {
+// create displayCategories function
+const displayCategories = (categories) => {
     const categoryContainer = document.getElementById("categories");
 
     // add data to the page
@@ -142,7 +159,7 @@ const DisplayCategories = (categories) => {
         // create a button
         const buttonContainer = document.createElement("div");
         buttonContainer.innerHTML = `
-        <button onclick="loadCategoryVideos(${item.category_id})" class="btn">
+        <button id='btn-${item.category_id}' onclick="loadCategoryVideos(${item.category_id})" class="btn btn-category">
             ${item.category}
         </button>`;
 
