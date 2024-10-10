@@ -10,7 +10,7 @@ function getTimeString(time) {
 
 // remove active class
 const removeActiveClass = () => {
-    const buttons = document.getElementsByClassName("btn-category");
+    const buttons = document.getElementsByClassName("category-btn");
     // console.log(buttons);
     for (let btn of buttons) {
         btn.classList.remove("active");
@@ -65,6 +65,20 @@ const loadDetails = async (videoId) => {
 //
 const displayDetails = (video) => {
     console.log(video);
+    const detailsContainer = document.getElementById("modal-content");
+
+    // add details
+    detailsContainer.innerHTML = `
+    <div class="flex flex-col gap-4">
+    <img src=${video.thumbnail} />
+    <p>${video.description}</p>
+    </div>`;
+
+    // 1st way to show modal
+    // document.getElementById("showModal-btn").click();
+
+    // 2nd way to show modal
+    document.getElementById("customModal").showModal();
 };
 
 /*
@@ -172,13 +186,13 @@ const displayCategories = (categories) => {
 
     // add data to the page
     // console.log(categories);
-    categories.forEach((item) => {
-        console.log(item);
+    categories.forEach((video) => {
+        console.log(video);
         // create a button
         const buttonContainer = document.createElement("div");
         buttonContainer.innerHTML = `
-        <button id='btn-${item.category_id}' onclick="loadCategoryVideos(${item.category_id})" class="btn btn-category">
-            ${item.category}
+        <button id='btn-${video.category_id}' onclick="loadCategoryVideos(${video.category_id})" class="btn category-btn">
+            ${video.category}
         </button>`;
 
         // button.onclick = () => alert("clicked");
