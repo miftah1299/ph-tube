@@ -26,6 +26,16 @@ const loadVideos = () => {
         .catch((error) => console.log(error));
 };
 
+// create loadCategoryVideos function
+const loadCategoryVideos = (id) => {
+    // alert(id);
+    // fetch category videos
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+        .then((response) => response.json())
+        .then((data) => DisplayVideos(data.category))
+        .catch((error) => console.log(error));
+};
+
 /*
 
 
@@ -55,6 +65,7 @@ const loadVideos = () => {
 // create DisplayVideos function
 const DisplayVideos = (videos) => {
     const videoContainer = document.getElementById("videos");
+    videoContainer.innerHTML = "";
 
     // add data to the page
     videos.forEach((item) => {
@@ -70,7 +81,7 @@ const DisplayVideos = (videos) => {
             ${
                 item.others.posted_date?.length === 0
                     ? ""
-                    : `<span class="absolute bottom-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-md">
+                    : `<span class="absolute text-xs bottom-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-md">
                     ${getTimeString(item.others.posted_date)}</span>`
             }
         
@@ -114,12 +125,16 @@ const DisplayCategories = (categories) => {
     categories.forEach((item) => {
         console.log(item);
         // create a button
-        const button = document.createElement("button");
-        button.classList = "btn";
-        button.innerText = item.category;
+        const buttonContainer = document.createElement("div");
+        buttonContainer.innerHTML = `
+        <button onclick="loadCategoryVideos(${item.category_id})" class="btn">
+            ${item.category}
+        </button>`;
+
+        // button.onclick = () => alert("clicked");
 
         // add button to categoryContainer
-        categoryContainer.append(button);
+        categoryContainer.append(buttonContainer);
     });
 };
 
