@@ -1,3 +1,6 @@
+// Initialize videos array
+let videos = [];
+
 // time
 function getTimeString(time) {
     // get hour and minute
@@ -27,13 +30,16 @@ const loadCategories = () => {
         .catch((error) => console.log(error));
 };
 
-// create loadVideos function
+// Function to load videos
 const loadVideos = (searchText = "") => {
     fetch(
         `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`
     )
         .then((response) => response.json())
-        .then((data) => displayVideos(data.videos))
+        .then((data) => {
+            videos = data.videos; // Assign fetched videos to the videos array
+            displayVideos(videos);
+        })
         .catch((error) => console.log(error));
 };
 
@@ -207,6 +213,27 @@ const displayCategories = (categories) => {
 
 document.getElementById("search-input").addEventListener("keyup", (e) => {
     loadVideos(e.target.value);
+});
+
+// Function to parse views
+const parseViews = (views) => {
+    if (views.endsWith('K')) {
+        return parseFloat(views) * 1000;
+    } else if (views.endsWith('M')) {
+        return parseFloat(views) * 1000000;
+    }
+    return parseFloat(views);
+};
+
+// Function to sort videos by views in descending order
+const sortVideosByViews = (videos) => {
+    return videos.sort((a, b) => parseViews(b.others.views) - parseViews(a.others.views));
+};
+
+// Event listener for the "Sort by view" button
+document.querySelector('.sort .btn').addEventListener('click', () => {
+    const sortedVideos = sortVideosByViews(videos);
+    displayVideos(sortedVideos);
 });
 
 loadCategories();
