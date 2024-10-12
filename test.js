@@ -15,4 +15,4 @@ function getTimeString(time) {
     return `${hour}hrs ${minute}min ago`;
 }
 
-console.log(getTimeString(3729));
+console.log(getTimeString(4500));
