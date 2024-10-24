@@ -127,7 +127,7 @@ const displayVideos = (videos) => {
         // add no videos found message
         videoContainer.innerHTML = `
         <div class="min-h-80 w-1/2 mx-auto flex flex-col justify-center items-center gap-5">
-        <img src="./images/icon.png" />
+        <img src="images/Icon.png" alt="no videos found" />
         <h2 class="text-4xl font-semibold text-center">Oops!! Sorry, There is no content here</h2>
         </div>`;
         return;
@@ -217,9 +217,9 @@ document.getElementById("search-input").addEventListener("keyup", (e) => {
 
 // Function to parse views
 const parseViews = (views) => {
-    if (views.endsWith('K')) {
+    if (views.endsWith("K")) {
         return parseFloat(views) * 1000;
-    } else if (views.endsWith('M')) {
+    } else if (views.endsWith("M")) {
         return parseFloat(views) * 1000000;
     }
     return parseFloat(views);
@@ -227,11 +227,13 @@ const parseViews = (views) => {
 
 // Function to sort videos by views in descending order
 const sortVideosByViews = (videos) => {
-    return videos.sort((a, b) => parseViews(b.others.views) - parseViews(a.others.views));
+    return videos.sort(
+        (a, b) => parseViews(b.others.views) - parseViews(a.others.views)
+    );
 };
 
 // Event listener for the "Sort by view" button
-document.querySelector('.sort .btn').addEventListener('click', () => {
+document.querySelector(".sort .btn").addEventListener("click", () => {
     const sortedVideos = sortVideosByViews(videos);
     displayVideos(sortedVideos);
 });
