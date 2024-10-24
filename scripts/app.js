@@ -127,7 +127,7 @@ const displayVideos = (videos) => {
         // add no videos found message
         videoContainer.innerHTML = `
         <div class="min-h-80 w-1/2 mx-auto flex flex-col justify-center items-center gap-5">
-        <img src="images/icon.png" />
+        <img src="./images/icon.png" />
         <h2 class="text-4xl font-semibold text-center">Oops!! Sorry, There is no content here</h2>
         </div>`;
         return;
